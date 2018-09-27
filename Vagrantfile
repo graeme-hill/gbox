@@ -15,17 +15,26 @@ Vagrant.configure("2") do |config|
   #############################################################################
   config.vm.provision "shell", privileged: false, inline: <<-SHELL
     # Install yay itself
-    git clone https://aur.archlinux.org/yay.git
-    pushd yay
-    makepkg -si --noconfirm
-    popd
+    if [ ! -d "yay" ] ; then
+      git clone https://aur.archlinux.org/yay.git yay
+      pushd yay
+      makepkg -si --noconfirm
+      popd
+    fi
 
     # Update package list and upgrade anything existing out of date packages
     yay -Syu --needed
 
     # Install a bunch of things
     yay -S --noconfirm --needed \
-      docker nvm-git neovim vim-plug-git zsh oh-my-zsh-git
+      docker nvm-git neovim vim-plug-git zsh oh-my-zsh-git yarn tree
+    
+    # Get a node
+    source /usr/share/nvm/init-nvm.sh
+    nvm install node
+
+    # Typescript
+    npm install -g typescript
   SHELL
 
   #############################################################################
