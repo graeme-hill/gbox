@@ -1,6 +1,6 @@
 export ZSH=/usr/share/oh-my-zsh/
 
-ZSH_THEME="bira"
+ZSH_THEME="graeme"
 
 plugins=(
   git

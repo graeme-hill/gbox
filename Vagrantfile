@@ -2,6 +2,7 @@ Vagrant.configure("2") do |config|
   config.vm.box = "archlinux/archlinux"
 
   config.vm.provision "file", source: ".zshrc", destination: "$HOME/.zshrc"
+  config.vm.provision "file", source: "init.vim", destination: "$HOME/.config/nvim/init.vim"
 
   #############################################################################
   # STEP 1 - As root user, install the pre-reqs to use yay
@@ -42,5 +43,13 @@ Vagrant.configure("2") do |config|
   #############################################################################
   config.vm.provision "shell", inline: <<-SHELL
     chsh -s "$(command -v zsh)" vagrant
+  SHELL
+
+  #############################################################################
+  # STEP 4 - Custom zsh theme
+  #############################################################################
+  config.vm.provision "file", source: "graeme.zsh-theme", destination: "$HOME/temp/graeme.zsh-theme"
+  config.vm.provision "shell", inline: <<-SHELL
+    mv /home/vagrant/temp/graeme.zsh-theme /usr/share/oh-my-zsh/themes
   SHELL
 end
