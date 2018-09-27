@@ -1,35 +1,37 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
-
 Vagrant.configure("2") do |config|
-  config.vm.box = "ubuntu/bionic64"
+  config.vm.box = "archlinux/archlinux"
 
+  config.vm.provision "file", source: ".zshrc", destination: "$HOME/.zshrc"
+
+  #############################################################################
+  # STEP 1 - As root user, install the pre-reqs to use yay
+  #############################################################################
   config.vm.provision "shell", inline: <<-SHELL
+    pacman -Sy --noconfirm --needed git base-devel
+  SHELL
 
-    apt-get update
+  #############################################################################
+  # STEP 2 - Install yay and a bunch of stuff
+  #############################################################################
+  config.vm.provision "shell", privileged: false, inline: <<-SHELL
+    # Install yay itself
+    git clone https://aur.archlinux.org/yay.git
+    pushd yay
+    makepkg -si --noconfirm
+    popd
 
-    apt-get install -y \
-      vim \ 
-      git \
-      apt-transport-https \
-      ca-certificates \
-      curl \
-      software-properties-common \
-      yarn
+    # Update package list and upgrade anything existing out of date packages
+    yay -Syu --needed
 
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+    # Install a bunch of things
+    yay -S --noconfirm --needed \
+      docker nvm-git neovim vim-plug-git zsh oh-my-zsh-git
+  SHELL
 
-    sudo add-apt-repository \
-      "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-      $(lsb_release -cs) \
-      stable"
-
-    apt-get update
-    apt-get install -y docker-ce docker-compose
-
-    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
-    source ~/.bashrc
-    nvm install node
-
+  #############################################################################
+  # STEP 3 - As root user, change default shell
+  #############################################################################
+  config.vm.provision "shell", inline: <<-SHELL
+    chsh -s "$(command -v zsh)" vagrant
   SHELL
 end
