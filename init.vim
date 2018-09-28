@@ -19,13 +19,20 @@ Plug 'airblade/vim-gitgutter'
 call plug#end()
 
 colorscheme onedark
-AirlineTheme papercolor
+let g:airline_theme="papercolor"
 
 " navigate windows better
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+
+tnoremap <C-J> <C-W><C-J>
+tnoremap <C-K> <C-W><C-K>
+tnoremap <C-L> <C-W><C-L>
+tnoremap <C-H> <C-W><C-H>
+
+tnoremap <Esc> <C-\><C-n>
 
 nnoremap <silent> <C-p> :FZF -m<cr>
 map <C-o> :NERDTreeToggle<CR>
