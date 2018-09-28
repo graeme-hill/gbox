@@ -16,10 +16,37 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/nerdtree'
 Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+Plug 'jacoborus/tender'
+Plug 'rust-lang/rust.vim'
+Plug 'pangloss/vim-javascript'
+Plug 'kristijanhusak/vim-hybrid-material'
+Plug 'jremmen/vim-ripgrep'
+Plug 'hashivim/vim-vagrant'
+Plug 'ianks/vim-tsx'
+Plug 'mxw/vim-jsx'
 call plug#end()
 
+" Visuals
+syntax on
+set termguicolors
+set background=dark
 colorscheme onedark
-let g:airline_theme="papercolor"
+hi VertSplit ctermbg=235 ctermfg=235
+set go-=L " remove left scrollbar
+set go-=r " remove right scrollbar
+
+" Visuals: airline
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
+
+let g:airline_powerline_fonts = 1 " https://github.com/bling/vim-airline/wiki/FAQ
+let g:airline#extensions#whitespace#enabled = 0 " too obtrusive
+let g:airline_theme = "papercolor"
+let g:airline#extensions#hunks#enabled = 0 " no room :(
+let g:airline_section_y = '' " no room :'(
+let g:airline#extensions#syntastic#enabled = 1
+let g:airline#extensions#branch#enabled = 0 " just nevever found it that useful :/
 
 " navigate windows better
 nnoremap <C-J> <C-W><C-J>
@@ -40,6 +67,7 @@ map <C-t> :terminal<CR>
 
 set showmatch
 set number
+set cursorline
 set nojoinspaces
 
 filetype plugin indent on
@@ -47,8 +75,12 @@ set expandtab
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
+set autoindent
+set smartindent
 
 set splitbelow
 set splitright
 
 set scrolloff=999
+
+set hidden " allow switching from unsaved buffers

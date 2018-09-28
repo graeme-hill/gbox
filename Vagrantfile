@@ -8,6 +8,9 @@ Vagrant.configure("2") do |config|
   # STEP 1 - As root user, install the pre-reqs to use yay
   #############################################################################
   config.vm.provision "shell", inline: <<-SHELL
+    rm -r /etc/pacman.d/gnupg
+    pacman-key --init
+    pacman-key --populate archlinux
     pacman -Sy --noconfirm --needed git base-devel
   SHELL
 
