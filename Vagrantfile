@@ -28,14 +28,17 @@ Vagrant.configure("2") do |config|
 
     # Install a bunch of things
     yay -S --noconfirm --needed \
-      docker nvm-git neovim vim-plug-git zsh oh-my-zsh-git yarn tree
+      docker nvm-git neovim zsh oh-my-zsh-git yarn tree ripgrep
     
     # Get a node
     source /usr/share/nvm/init-nvm.sh
     nvm install node
 
-    # Typescript
-    npm install -g typescript
+    # Typescript and co
+    npm install -g typescript prettier
+
+    # Install vim plugins so they are there on first run
+    nvim +'PlugInstall --sync' +qa
   SHELL
 
   #############################################################################
