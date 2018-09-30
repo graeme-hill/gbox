@@ -9,6 +9,8 @@ Plug 'HerringtonDarkholme/yats.vim'
 Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
 Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/denite.nvim'
+Plug 'zchee/deoplete-clang'
+Plug 'bfrg/vim-cpp-modern'
 Plug 'jremmen/vim-ripgrep' " :Rg <something>
 Plug 'tpope/vim-surround' ":S(
 Plug 'vim-airline/vim-airline'
@@ -30,6 +32,9 @@ Plug 'hashivim/vim-vagrant'
 Plug 'ianks/vim-tsx'
 Plug 'mxw/vim-jsx'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'jlanzarotta/bufexplorer'
+Plug 'tpope/vim-sleuth'
+Plug 'uarun/vim-protobuf'
 call plug#end()
 
 " auto complete
@@ -37,13 +42,7 @@ let g:deoplete#enable_at_startup = 1
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 " Visuals
-syntax on
-set termguicolors
-set background=dark
 colorscheme onedark
-hi VertSplit ctermbg=235 ctermfg=235
-set go-=L " remove left scrollbar
-set go-=r " remove right scrollbar
 
 " Visuals: airline
 let g:airline_left_sep = ''
