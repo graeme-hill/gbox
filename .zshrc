@@ -12,12 +12,7 @@ if [[ ! -d $ZSH_CACHE_DIR ]]; then
 fi
 
 source $ZSH/oh-my-zsh.sh
+
 source /usr/share/nvm/init-nvm.sh
 
-###############################################################################
-# ADDED BY GRAEME
-###############################################################################
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+PATH="$PATH:$(ruby -e 'print Gem.user_dir')/bin"

@@ -31,17 +31,28 @@ Vagrant.configure("2") do |config|
 
     # Install a bunch of things
     yay -S --noconfirm --needed \
-      docker nvm-git neovim zsh oh-my-zsh-git yarn tree ripgrep
+      docker nvm-git neovim zsh oh-my-zsh-git yarn tree ripgrep python \
+      python-pip python2 python2-pip ruby rubygems clang
     
+    # Allow neovim python plugins
+    pip3 install --user neovim
+    pip2 install --user neovim
+
+    # Allow neovim ruby plugins
+    gem install neovim
+
     # Get a node
     source /usr/share/nvm/init-nvm.sh
     nvm install node
 
-    # Typescript and co
-    npm install -g typescript prettier
+    # Typescript and co + neovim plugin support
+    npm install -g typescript prettier neovim
 
     # Install vim plugins so they are there on first run
-    nvim +'PlugInstall --sync' +qa
+    nvim +'PlugInstall --sync' +UpdateRemotePlugins +qa
+
+    # golang things
+    go get -u github.com/kardianos/govendor
   SHELL
 
   #############################################################################
