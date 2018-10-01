@@ -50,6 +50,9 @@ Vagrant.configure("2") do |config|
 
     # Install vim plugins so they are there on first run
     nvim +'PlugInstall --sync' +UpdateRemotePlugins +qa
+
+    # golang things
+    go get -u github.com/kardianos/govendor
   SHELL
 
   #############################################################################
