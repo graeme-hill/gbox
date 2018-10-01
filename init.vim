@@ -5,12 +5,17 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.config/nvim/plugged')
-Plug 'leafgarland/typescript-vim'
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
+Plug 'Shougo/deoplete.nvim'
+Plug 'Shougo/denite.nvim'
+Plug 'mhartington/nvim-typescript'
 Plug 'jremmen/vim-ripgrep' " :Rg <something>
-Plug 'tpope/vim-surround' ":S(
+Plug 'tpope/vim-surround' " :S(
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'rafi/awesome-vim-colorschemes'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-surround'
@@ -25,7 +30,12 @@ Plug 'jremmen/vim-ripgrep'
 Plug 'hashivim/vim-vagrant'
 Plug 'ianks/vim-tsx'
 Plug 'mxw/vim-jsx'
+Plug 'fatih/vim-go'
 call plug#end()
+
+" deoplete config
+let g:deoplete#enable_at_startup = 1
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 " Visuals
 syntax on
@@ -84,3 +94,7 @@ set splitright
 set scrolloff=999
 
 set hidden " allow switching from unsaved buffers
+
+" show whitespace
+set list
+set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
