@@ -46,7 +46,7 @@ inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 " Visuals
 set background=dark
-colorscheme solarized
+colorscheme solarized8
 
 " Visuals: airline
 let g:airline_left_sep = ''
