@@ -36,7 +36,7 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'jlanzarotta/bufexplorer'
 Plug 'tpope/vim-sleuth'
 Plug 'uarun/vim-protobuf'
-Plug 'mhinz/startify'
+Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-obsession'
 Plug 'altercation/vim-colors-solarized'
 call plug#end()
