@@ -35,6 +35,9 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'jlanzarotta/bufexplorer'
 Plug 'tpope/vim-sleuth'
 Plug 'uarun/vim-protobuf'
+Plug 'mhinz/startify'
+Plug 'tpope/vim-obsession'
+Plug 'altercation/vim-colors-solarized'
 call plug#end()
 
 " auto complete
@@ -42,7 +45,8 @@ let g:deoplete#enable_at_startup = 1
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 " Visuals
-colorscheme onedark
+set background=dark
+colorscheme solarized
 
 " Visuals: airline
 let g:airline_left_sep = ''
@@ -70,8 +74,15 @@ tnoremap <C-H> <C-W><C-H>
 tnoremap <Esc> <C-\><C-n>
 
 nnoremap <silent> <C-p> :FZF -m<cr>
-map <C-o> :NERDTreeToggle<CR>
+map <C-q> :NERDTreeToggle<CR>
 map <C-t> :terminal<CR>
+map <M-h> :vertical resize -1<CR>
+map <M-j> :resize -1<CR>
+map <M-k> :resize +1<CR>
+map <M-l> :vertical resize +1<CR>
+map <S-h> :tabp<CR>
+map <S-l> :tabn<CR>
+map <S-k> :tabe<CR>
 
 set showmatch
 set number
