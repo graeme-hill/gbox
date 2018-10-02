@@ -12,7 +12,7 @@ Plug 'Shougo/denite.nvim'
 Plug 'zchee/deoplete-clang'
 Plug 'bfrg/vim-cpp-modern'
 Plug 'jremmen/vim-ripgrep' " :Rg <something>
-Plug 'tpope/vim-surround' ":S(
+Plug 'tpope/vim-surround' " :S(
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'rafi/awesome-vim-colorschemes'
@@ -103,6 +103,10 @@ set splitright
 set scrolloff=999
 
 set hidden " allow switching from unsaved buffers
+
+" show whitespace
+set list
+set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
 
 " golang specific tab rules
 au FileType go set noexpandtab
