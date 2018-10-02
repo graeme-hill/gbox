@@ -108,7 +108,7 @@ set hidden " allow switching from unsaved buffers
 
 " show whitespace
 set list
-set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
+"set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
 
 " golang specific tab rules
 au FileType go set noexpandtab
