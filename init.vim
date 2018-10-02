@@ -89,7 +89,7 @@ set showmatch
 set number
 set cursorline
 set nojoinspaces
-set autoload
+set autoread
 
 filetype plugin indent on
 set expandtab
