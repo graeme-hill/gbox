@@ -4,6 +4,7 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall
 endif
 
+" all of the plugins!
 call plug#begin('~/.config/nvim/plugged')
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
@@ -35,6 +36,9 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'jlanzarotta/bufexplorer'
 Plug 'tpope/vim-sleuth'
 Plug 'uarun/vim-protobuf'
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install',
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue'] }
 call plug#end()
 
 " auto complete
@@ -42,15 +46,14 @@ let g:deoplete#enable_at_startup = 1
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 " Visuals
-colorscheme onedark
+colorscheme iceberg
 
-" Visuals: airline
+" Airline stuff
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
-
 let g:airline_powerline_fonts = 1 " https://github.com/bling/vim-airline/wiki/FAQ
 let g:airline#extensions#whitespace#enabled = 0 " too obtrusive
-let g:airline_theme = "papercolor"
+let g:airline_theme = "hybrid"
 let g:airline#extensions#hunks#enabled = 0 " no room :(
 let g:airline_section_y = '' " no room :'(
 let g:airline#extensions#syntastic#enabled = 1
@@ -70,7 +73,7 @@ tnoremap <C-H> <C-W><C-H>
 tnoremap <Esc> <C-\><C-n>
 
 nnoremap <silent> <C-p> :FZF -m<cr>
-map <C-o> :NERDTreeToggle<CR>
+map <C-q> :NERDTreeToggle<CR>
 map <C-t> :terminal<CR>
 
 set showmatch
