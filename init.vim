@@ -42,6 +42,7 @@ Plug 'prettier/vim-prettier', {
 Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-obsession'
 Plug 'altercation/vim-colors-solarized'
+Plug 'jparise/vim-graphql'
 call plug#end()
 
 " auto complete
