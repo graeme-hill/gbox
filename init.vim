@@ -50,7 +50,7 @@ let g:deoplete#enable_at_startup = 1
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 " Visuals
-colorscheme iceberg
+colorscheme github
 
 " Airline stuff
 let g:airline_left_sep = ''
