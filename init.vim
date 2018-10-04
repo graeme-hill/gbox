@@ -45,12 +45,17 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'jparise/vim-graphql'
 call plug#end()
 
+" Run prettier automatically on save
+let g:prettier#autoformat = 0
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
+
 " auto complete
 let g:deoplete#enable_at_startup = 1
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 " Visuals
-colorscheme github
+set background=dark
+colorscheme solarized8
 
 " Airline stuff
 let g:airline_left_sep = ''
@@ -80,9 +85,13 @@ nnoremap <silent> <C-p> :FZF -m<cr>
 map <C-q> :NERDTreeToggle<CR>
 map <C-t> :terminal<CR>
 map <M-h> :vertical resize -1<CR>
+map ˙ :vertical resize -1<CR>
 map <M-j> :resize -1<CR>
+map ∆ :resize -1<CR>
 map <M-k> :resize +1<CR>
+map ˚ :resize +1<CR>
 map <M-l> :vertical resize +1<CR>
+map ¬ :vertical resize +1<CR>
 map <S-h> :tabp<CR>
 map <S-l> :tabn<CR>
 map <S-k> :tabe<CR>
@@ -112,8 +121,16 @@ set hidden " allow switching from unsaved buffers
 set list
 "set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
 
-" golang specific tab rules
+" golang specific
 au FileType go set noexpandtab
 au FileType go set shiftwidth=4
 au FileType go set softtabstop=4
 au FileType go set tabstop=4
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_types = 1
