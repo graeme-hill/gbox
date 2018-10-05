@@ -45,6 +45,10 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'jparise/vim-graphql'
 call plug#end()
 
+" ripgrep config
+let g:rg_command = 'rg --vimgrep -F --'
+let g:rg_highlight = 1
+
 " Run prettier automatically on save
 let g:prettier#autoformat = 0
 autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
