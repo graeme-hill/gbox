@@ -42,8 +42,12 @@ Plug 'prettier/vim-prettier', {
 Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-obsession'
 Plug 'altercation/vim-colors-solarized'
+Plug 'NLKNguyen/papercolor-theme'
 Plug 'jparise/vim-graphql'
 call plug#end()
+
+" use system clipboard by default
+set clipboard=unnamedplus
 
 " ripgrep config
 let g:rg_command = 'rg --vimgrep -F --'

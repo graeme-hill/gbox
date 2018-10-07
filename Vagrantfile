@@ -1,6 +1,11 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "archlinux/archlinux"
 
+  # Give vm same identity as host
+  config.vm.provision "file", source: "~/.ssh/id_rsa", destination: "$HOME/.ssh/id_rsa"
+  config.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "$HOME/.ssh/id_rsa.pub"
+
+  # Dotfiles
   config.vm.provision "file", source: ".zshrc", destination: "$HOME/.zshrc"
   config.vm.provision "file", source: "init.vim", destination: "$HOME/.config/nvim/init.vim"
 
@@ -32,8 +37,12 @@ Vagrant.configure("2") do |config|
     # Install a bunch of things
     yay -S --noconfirm --needed \
       docker nvm-git neovim zsh oh-my-zsh-git yarn tree ripgrep python \
-      python-pip python2 python2-pip ruby rubygems clang
+      python-pip python2 python2-pip ruby rubygems clang dos2unix
     
+    # Make sure config files have correct line endings
+    dos2unix $HOME/.zshrc
+    dos2unix $HOME/.config/nvim/init.vim
+
     # Allow neovim python plugins
     pip3 install --user neovim
     pip2 install --user neovim
@@ -56,7 +65,7 @@ Vagrant.configure("2") do |config|
   SHELL
 
   #############################################################################
-  # STEP 3 - As root user, change default shell
+  # STEP 3 - As root user, change default shell for vagrant user
   #############################################################################
   config.vm.provision "shell", inline: <<-SHELL
     chsh -s "$(command -v zsh)" vagrant
