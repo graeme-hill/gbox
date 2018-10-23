@@ -44,6 +44,9 @@ Plug 'tpope/vim-obsession'
 Plug 'altercation/vim-colors-solarized'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'jparise/vim-graphql'
+Plug 'vim-scripts/borland.vim'
+Plug 'chriskempson/base16-vim'
+Plug 'mkarmona/colorsbox'
 call plug#end()
 
 " use system clipboard by default
@@ -62,8 +65,9 @@ let g:deoplete#enable_at_startup = 1
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 " Visuals
+set termguicolors
 set background=dark
-colorscheme solarized8
+colorscheme gblue
 
 " Airline stuff
 let g:airline_left_sep = ''
@@ -105,7 +109,7 @@ map <S-l> :tabn<CR>
 map <S-k> :tabe<CR>
 
 set showmatch
-set number
+set relativenumber
 set cursorline
 set nojoinspaces
 set autoread
