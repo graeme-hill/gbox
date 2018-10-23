@@ -118,11 +118,6 @@ map <S-l> :tabn<CR>
 map <S-k> :tabe<CR>
 
 set showmatch
-<<<<<<< HEAD
-set relativenumber
-=======
-set nonumber
->>>>>>> origin/master
 set cursorline
 set nojoinspaces
 set autoread
