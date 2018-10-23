@@ -6,6 +6,7 @@ endif
 
 " Plugins
 call plug#begin('~/.config/nvim/plugged')
+Plug 'graeme-hill/graeme-themes'
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
 Plug 'Shougo/deoplete.nvim'
@@ -14,8 +15,8 @@ Plug 'zchee/deoplete-clang'
 Plug 'bfrg/vim-cpp-modern'
 Plug 'jremmen/vim-ripgrep' " :Rg <something>
 Plug 'tpope/vim-surround' " :S(
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
 Plug 'rafi/awesome-vim-colorschemes'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -46,6 +47,14 @@ Plug 'NLKNguyen/papercolor-theme'
 Plug 'jparise/vim-graphql'
 call plug#end()
 
+set termguicolors
+
+augroup CursorLineOnlyInActiveWindow
+  autocmd!
+  autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+  autocmd WinLeave * setlocal nocursorline
+augroup END 
+
 " use system clipboard by default
 set clipboard=unnamedplus
 
@@ -63,18 +72,18 @@ inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 " Visuals
 set background=dark
-colorscheme solarized8
+colorscheme g-blue
 
 " Airline stuff
-let g:airline_left_sep = ''
-let g:airline_right_sep = ''
-let g:airline_powerline_fonts = 1 " https://github.com/bling/vim-airline/wiki/FAQ
-let g:airline#extensions#whitespace#enabled = 0 " too obtrusive
-let g:airline_theme = "hybrid"
-let g:airline#extensions#hunks#enabled = 0 " no room :(
-let g:airline_section_y = '' " no room :'(
-let g:airline#extensions#syntastic#enabled = 1
-let g:airline#extensions#branch#enabled = 0 " just nevever found it that useful :/
+" let g:airline_left_sep = ''
+" let g:airline_right_sep = ''
+" let g:airline_powerline_fonts = 1 " https://github.com/bling/vim-airline/wiki/FAQ
+" let g:airline#extensions#whitespace#enabled = 0 " too obtrusive
+" let g:airline_theme = "hybrid"
+" let g:airline#extensions#hunks#enabled = 0 " no room :(
+" let g:airline_section_y = '' " no room :'(
+" let g:airline#extensions#syntastic#enabled = 1
+" let g:airline#extensions#branch#enabled = 0 " just nevever found it that useful :/
 
 " navigate windows better
 nnoremap <C-J> <C-W><C-J>
@@ -105,7 +114,7 @@ map <S-l> :tabn<CR>
 map <S-k> :tabe<CR>
 
 set showmatch
-set number
+set nonumber
 set cursorline
 set nojoinspaces
 set autoread
