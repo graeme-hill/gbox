@@ -58,15 +58,21 @@ augroup CursorLineOnlyInActiveWindow
   autocmd WinLeave * setlocal nocursorline
 augroup END 
 
+" line numbers
+set nonumber
+
+" show dot files
+let NERDTreeShowHidden=1
+
 " use system clipboard by default
 set clipboard=unnamedplus
 
 " ripgrep config
-let g:rg_command = 'rg --vimgrep -F --'
+let g:rg_command = 'rg --hidden --vimgrep -F --'
 let g:rg_highlight = 1
 
 " Run prettier automatically on save
-let g:prettier#autoformat = 0
+let g:prettier#autoformat = 1
 autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
 
 " auto complete
@@ -76,7 +82,7 @@ inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 " Visuals
 set termguicolors
 set background=dark
-colorscheme g-blue
+colorscheme apprentice
 
 " Airline stuff
 " let g:airline_left_sep = ''
