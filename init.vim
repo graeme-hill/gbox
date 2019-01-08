@@ -48,6 +48,12 @@ Plug 'jparise/vim-graphql'
 Plug 'vim-scripts/borland.vim'
 Plug 'chriskempson/base16-vim'
 Plug 'mkarmona/colorsbox'
+Plug 'dylon/vim-antlr'
+Plug 'itchyny/screensaver.vim'
+Plug 'uguu-org/vim-matrix-screensaver'
+Plug 'colepeters/spacemacs-theme.vim'
+Plug 'hail2u/vim-css3-syntax'
+Plug 'ap/vim-css-color'
 call plug#end()
 
 set termguicolors
@@ -59,7 +65,7 @@ augroup CursorLineOnlyInActiveWindow
 augroup END 
 
 " line numbers
-set nonumber
+set number
 
 " show dot files
 let NERDTreeShowHidden=1
@@ -82,7 +88,7 @@ inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 " Visuals
 set termguicolors
 set background=dark
-colorscheme apprentice
+colorscheme atom
 
 " Airline stuff
 " let g:airline_left_sep = ''
