@@ -21,7 +21,7 @@ yay -Syu --needed
 
 # Install a bunch of things
 yay -S --noconfirm --needed \
-  docker nvm-git neovim zsh oh-my-zsh-git yarn tree ripgrep python \
+  docker docker-compose nvm-git neovim zsh oh-my-zsh-git yarn tree ripgrep python \
   python-pip python2 python2-pip ruby rubygems clang dos2unix
 
 # Make sure config files have correct line endings
