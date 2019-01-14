@@ -40,7 +40,7 @@ source /usr/share/nvm/init-nvm.sh
 nvm install node
 
 # Typescript and co + neovim plugin support
-npm install -g typescript prettier neovim
+npm install -g typescript prettier neovim concurrently
 
 # Install vim plugins so they are there on first run
 nvim +'PlugInstall --sync' +UpdateRemotePlugins +qa
