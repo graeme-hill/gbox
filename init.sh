@@ -48,7 +48,11 @@ nvim +'PlugInstall --sync' +UpdateRemotePlugins +qa
 # golang things
 go get -u github.com/kardianos/govendor
 
+# change shell to zsh
 sudo chsh -s "$(command -v zsh)" graeme
+
+# allow docker without sudo
+sudo usermod -aG docker $USER
 
 mkdir -p ~/temp
 cp graeme.zsh-theme ~/temp/graeme.zsh-theme
