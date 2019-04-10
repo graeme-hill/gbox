@@ -169,3 +169,6 @@ let g:go_highlight_types = 1
 
 " terminal specific
 au TermOpen * setlocal nonumber norelativenumber
+
+" distributed clipboard stuff
+command! -nargs=1 RemoteYank silent exec "!curl" '-d <args> -X POST http://10.0.2.2:36912/set_clipboard_content' 

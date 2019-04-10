@@ -16,6 +16,8 @@ Vagrant.configure("2") do |config|
     rm -r /etc/pacman.d/gnupg
     pacman-key --init
     pacman-key --populate archlinux
+    pacman -Sy --noconfirm archlinux-keyring
+    pacman -Syyu --noconfirm
     pacman -Sy --noconfirm --needed git base-devel
   SHELL
 
