@@ -1,7 +1,7 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "archlinux/archlinux"
 
-  # Give vm same identity as host
+  # Give vm same ssh identity as host
   config.vm.provision "file", source: "~/.ssh/id_rsa", destination: "$HOME/.ssh/id_rsa"
   config.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "$HOME/.ssh/id_rsa.pub"
 
@@ -36,8 +36,8 @@ Vagrant.configure("2") do |config|
 
     # Install a bunch of things
     yay -S --noconfirm --needed \
-      docker nvm-git neovim zsh oh-my-zsh-git yarn tree ripgrep python \
-      python-pip python2 python2-pip ruby rubygems clang dos2unix
+      docker docker-compose nvm-git neovim zsh oh-my-zsh-git yarn tree ripgrep \
+      python python-pip python2 python2-pip ruby rubygems clang dos2unix
     
     # Make sure config files have correct line endings
     dos2unix $HOME/.zshrc
