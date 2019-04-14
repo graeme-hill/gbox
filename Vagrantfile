@@ -83,7 +83,7 @@ Vagrant.configure("2") do |config|
     npm install -g typescript prettier neovim
 
     # Install vim plugins so they are there on first run
-    # nvim +'PlugInstall --sync' +UpdateRemotePlugins +qa
+    nvim +'PlugInstall --sync' +UpdateRemotePlugins +qa
 
     # golang things
     export GOPATH=$HOME/gocode
