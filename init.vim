@@ -88,7 +88,7 @@ inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 " Visuals
 set termguicolors
 set background=dark
-colorscheme atom
+" olorscheme atom
 
 " Airline stuff
 " let g:airline_left_sep = ''

@@ -1,5 +1,5 @@
 Vagrant.configure("2") do |config|
-  config.vm.box = "archlinux/archlinux"
+  config.vm.box = "centos/7"
 
   # Give vm same ssh identity as host
   config.vm.provision "file", source: "~/.ssh/id_rsa", destination: "$HOME/.ssh/id_rsa"
@@ -9,38 +9,60 @@ Vagrant.configure("2") do |config|
   config.vm.provision "file", source: ".zshrc", destination: "$HOME/.zshrc"
   config.vm.provision "file", source: "init.vim", destination: "$HOME/.config/nvim/init.vim"
 
+  # kubectl repo
+  config.vm.provision "file", source: "kubernetes.repo", destination: "$HOME/temp/kubernetes.repo"
+
   #############################################################################
-  # STEP 1 - As root user, install the pre-reqs to use yay
+  # STEP 1 - As root user, install some stuff
   #############################################################################
   config.vm.provision "shell", inline: <<-SHELL
-    rm -r /etc/pacman.d/gnupg
-    pacman-key --init
-    pacman-key --populate archlinux
-    pacman -Sy --noconfirm archlinux-keyring
-    pacman -Syyu --noconfirm
-    pacman -Sy --noconfirm --needed git base-devel
+    # First update all the stock packages
+    yum update -y
+
+    # kubectl repo
+    mv /home/vagrant/temp/kubernetes.repo /etc/yum.repos.d/kubernetes.repo
+
+    # Setup Docker CE stable repository
+    yum install -y yum-utils device-mapper-persistent-data lvm2
+    yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+
+    # Ripgrep's repo
+    yum-config-manager --add-repo=https://copr.fedorainfracloud.org/coprs/carlwgeorge/ripgrep/repo/epel-7/carlwgeorge-ripgrep-epel-7.repo
+
+    # Install a whole bunch of stuff
+    yum install -y git dos2unix docker-ce docker-ce-cli zsh python36 \
+      python36-setuptools python-setuptools ruby ripgrep tree docker-compose \
+      kubectl
+
+    # Get pip2 and pip3
+    easy_install-3.6 pip
+    easy_install-2.7 pip
   SHELL
 
   #############################################################################
-  # STEP 2 - Install yay and a bunch of stuff
+  # STEP 2 - As non-root user, config some stuff
   #############################################################################
   config.vm.provision "shell", privileged: false, inline: <<-SHELL
-    # Install yay itself
-    if [ ! -d "yay" ] ; then
-      git clone https://aur.archlinux.org/yay.git yay
-      pushd yay
-      makepkg -si --noconfirm
-      popd
+    # oh my zsh
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+    # Install golang from tarball into user folder
+    if [ ! -d "$HOME/go" ] ; then
+      mkdir -p $HOME/Downloads
+      curl -L -o $HOME/Downloads/go.tar.gz https://dl.google.com/go/go1.12.4.linux-amd64.tar.gz
+      tar -xzf $HOME/Downloads/go.tar.gz -C $HOME
+      rm $HOME/Downloads/go.tar.gz
     fi
 
-    # Update package list and upgrade anything existing out of date packages
-    yay -Syu --needed
+    # Neovim
+    if [ ! -d "$HOME/nvim" ] ; then
+      mkdir -p $HOME/Downloads
+      curl -L -o ~/Downloads/nvim.tar.gz https://github.com/neovim/neovim/releases/download/v0.3.4/nvim-linux64.tar.gz
+      tar -xzf $HOME/Downloads/nvim.tar.gz -C $HOME
+      mv $HOME/nvim-linux64 $HOME/nvim
+      rm $HOME/Downloads/nvim.tar.gz
+    fi
 
-    # Install a bunch of things
-    yay -S --noconfirm --needed \
-      docker docker-compose nvm-git neovim zsh oh-my-zsh-git yarn tree ripgrep \
-      python python-pip python2 python2-pip ruby rubygems clang dos2unix
-    
     # Make sure config files have correct line endings
     dos2unix $HOME/.zshrc
     dos2unix $HOME/.config/nvim/init.vim
@@ -52,18 +74,20 @@ Vagrant.configure("2") do |config|
     # Allow neovim ruby plugins
     gem install neovim
 
-    # Get a node
-    source /usr/share/nvm/init-nvm.sh
+    # Install nvm and get a node
+    curl https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
+    source $HOME/.nvm/nvm.sh
     nvm install node
 
     # Typescript and co + neovim plugin support
     npm install -g typescript prettier neovim
 
     # Install vim plugins so they are there on first run
-    nvim +'PlugInstall --sync' +UpdateRemotePlugins +qa
+    # nvim +'PlugInstall --sync' +UpdateRemotePlugins +qa
 
     # golang things
-    go get -u github.com/kardianos/govendor
+    export GOPATH=$HOME/gocode
+    $HOME/go/bin/go get -u github.com/kardianos/govendor
   SHELL
 
   #############################################################################
@@ -76,8 +100,9 @@ Vagrant.configure("2") do |config|
   #############################################################################
   # STEP 4 - Custom zsh theme
   #############################################################################
-  config.vm.provision "file", source: "graeme.zsh-theme", destination: "$HOME/temp/graeme.zsh-theme"
-  config.vm.provision "shell", inline: <<-SHELL
-    mv /home/vagrant/temp/graeme.zsh-theme /usr/share/oh-my-zsh/themes
+  config.vm.provision "file", source: "graeme.zsh-theme", destination: "$HOME/.oh-my-zsh/themes/graeme.zsh-theme"
+  config.vm.provision "shell", privileged: false, inline: <<-SHELL
+    dos2unix $HOME/.oh-my-zsh/themes/graeme.zsh-theme
   SHELL
+
 end
