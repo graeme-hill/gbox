@@ -97,12 +97,4 @@ Vagrant.configure("2") do |config|
     chsh -s "$(command -v zsh)" vagrant
   SHELL
 
-  #############################################################################
-  # STEP 4 - Custom zsh theme
-  #############################################################################
-  config.vm.provision "file", source: "graeme.zsh-theme", destination: "$HOME/.oh-my-zsh/themes/graeme.zsh-theme"
-  config.vm.provision "shell", privileged: false, inline: <<-SHELL
-    dos2unix $HOME/.oh-my-zsh/themes/graeme.zsh-theme
-  SHELL
-
 end
