@@ -91,6 +91,10 @@ Vagrant.configure("2") do |config|
     export GOPATH=$HOME/gocode
     $HOME/go/bin/go get -u github.com/kardianos/govendor
 
+    # Rust
+    curl -L -o ~/Downloads/rustup.sh https://sh.rustup.rs
+    chmod +x ~/Downloads/rustup.sh
+    ./rustup.sh -y
   SHELL
 
   #############################################################################
