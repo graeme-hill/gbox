@@ -1,5 +1,5 @@
 ZSH=$HOME/.oh-my-zsh
-ZSH_THEME="graeme"
+ZSH_THEME="bira"
 
 plugins=(
   git

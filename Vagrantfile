@@ -5,8 +5,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "file", source: "~/.ssh/id_rsa", destination: "$HOME/.ssh/id_rsa"
   config.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "$HOME/.ssh/id_rsa.pub"
 
-  # Dotfiles
-  config.vm.provision "file", source: ".zshrc", destination: "$HOME/.zshrc"
+  # vim config
   config.vm.provision "file", source: "init.vim", destination: "$HOME/.config/nvim/init.vim"
 
   # kubectl repo
@@ -34,6 +33,9 @@ Vagrant.configure("2") do |config|
       python36-setuptools python-setuptools ruby ripgrep tree docker-compose \
       kubectl
 
+    # Standard compilers and junk
+    yum groupinstall -y "Development Tools"
+
     # Get pip2 and pip3
     easy_install-3.6 pip
     easy_install-2.7 pip
@@ -43,7 +45,7 @@ Vagrant.configure("2") do |config|
   # STEP 2 - As non-root user, config some stuff
   #############################################################################
   config.vm.provision "shell", privileged: false, inline: <<-SHELL
-    # oh my zsh
+    # oh my zsh (this writes a default .zshrc that we will overwrite later)
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
     # Install golang from tarball into user folder
@@ -83,11 +85,12 @@ Vagrant.configure("2") do |config|
     npm install -g typescript prettier neovim
 
     # Install vim plugins so they are there on first run
-    nvim +'PlugInstall --sync' +UpdateRemotePlugins +qa
+    $HOME/nvim/bin/nvim +'PlugInstall --sync' +UpdateRemotePlugins +qa
 
     # golang things
     export GOPATH=$HOME/gocode
     $HOME/go/bin/go get -u github.com/kardianos/govendor
+
   SHELL
 
   #############################################################################
@@ -96,5 +99,8 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
     chsh -s "$(command -v zsh)" vagrant
   SHELL
+
+  # Set zsh config
+  config.vm.provision "file", source: ".zshrc", destination: "$HOME/.zshrc"
 
 end
