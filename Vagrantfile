@@ -2,8 +2,8 @@ Vagrant.configure("2") do |config|
   config.vm.box = "centos/7"
 
   # Give vm same ssh identity as host
-  config.vm.provision "file", source: "~/.ssh/id_rsa", destination: "$HOME/.ssh/id_rsa"
-  config.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "$HOME/.ssh/id_rsa.pub"
+  # config.vm.provision "file", source: "~/.ssh/id_rsa", destination: "$HOME/.ssh/id_rsa"
+  # config.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "$HOME/.ssh/id_rsa.pub"
 
   # vim config
   config.vm.provision "file", source: "init.vim", destination: "$HOME/.config/nvim/init.vim"
@@ -45,6 +45,12 @@ Vagrant.configure("2") do |config|
   # STEP 2 - As non-root user, config some stuff
   #############################################################################
   config.vm.provision "shell", privileged: false, inline: <<-SHELL
+
+    # Git config
+    git config --global user.name "Graeme Hill"
+    git config --global user.email "graemekh@gmail.com"
+    git config --globa core.editor nvim
+
     # oh my zsh (this writes a default .zshrc that we will overwrite later)
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
@@ -84,17 +90,20 @@ Vagrant.configure("2") do |config|
     # Typescript and co + neovim plugin support
     npm install -g typescript prettier neovim
 
-    # Install vim plugins so they are there on first run
-    $HOME/nvim/bin/nvim +'PlugInstall --sync' +UpdateRemotePlugins +qa
-
     # golang things
     export GOPATH=$HOME/gocode
     $HOME/go/bin/go get -u github.com/kardianos/govendor
+    $HOME/go/bin/go get -u github.com/golang/protobuf/protoc-gen-go
 
-    # Rust
-    curl -L -o ~/Downloads/rustup.sh https://sh.rustup.rs
-    chmod +x ~/Downloads/rustup.sh
-    ./rustup.sh -y
+    # Protobuf compiler
+    if [ ! -d "$HOME/protobuf" ] ; then
+      curl -L -o ~/Downloads/protobuf.zip https://github.com/protocolbuffers/protobuf/releases/download/v3.7.1/protoc-3.7.1-linux-x86_64.zip
+      mkdir $HOME/protobuf
+      unzip ~/Downloads/protobuf.zip -d $HOME/protobuf
+    fi
+
+    # Install vim plugins so they are there on first run
+    # $HOME/nvim/bin/nvim +'PlugInstall --sync' +UpdateRemotePlugins +qa
   SHELL
 
   #############################################################################
@@ -106,5 +115,8 @@ Vagrant.configure("2") do |config|
 
   # Set zsh config
   config.vm.provision "file", source: ".zshrc", destination: "$HOME/.zshrc"
+  config.vm.provision "shell", privileged: false, inline: <<-SHELL
+    dos2unix $HOME/.zshrc
+  SHELL
 
 end

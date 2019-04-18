@@ -17,4 +17,4 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
 export GOPATH=$HOME/gocode
-export PATH=$PATH:$HOME/go/bin:$HOME/nvim/bin:$HOME/.cargo/bin:"$(ruby -e 'print Gem.user_dir')/bin"
+export PATH=$PATH:$HOME/go/bin:$HOME/gocode/bin:$HOME/nvim/bin:$HOME/.cargo/bin:$HOME/protobuf/bin:"$(ruby -e 'print Gem.user_dir')/bin"
