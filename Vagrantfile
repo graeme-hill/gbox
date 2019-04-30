@@ -2,8 +2,8 @@ Vagrant.configure("2") do |config|
   config.vm.box = "centos/7"
 
   # Give vm same ssh identity as host
-  # config.vm.provision "file", source: "~/.ssh/id_rsa", destination: "$HOME/.ssh/id_rsa"
-  # config.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "$HOME/.ssh/id_rsa.pub"
+  config.vm.provision "file", source: "~/.ssh/id_rsa", destination: "$HOME/.ssh/id_rsa"
+  config.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "$HOME/.ssh/id_rsa.pub"
 
   # vim config
   config.vm.provision "file", source: "init.vim", destination: "$HOME/.config/nvim/init.vim"
@@ -16,6 +16,7 @@ Vagrant.configure("2") do |config|
   #############################################################################
   config.vm.provision "shell", inline: <<-SHELL
     # First update all the stock packages
+    #yum makecache -y
     yum update -y
 
     # kubectl repo
@@ -25,20 +26,34 @@ Vagrant.configure("2") do |config|
     yum install -y yum-utils device-mapper-persistent-data lvm2
     yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 
+    # Python3 and Git2 repo
+    yum install -y https://centos7.iuscommunity.org/ius-release.rpm
+
     # Ripgrep's repo
     yum-config-manager --add-repo=https://copr.fedorainfracloud.org/coprs/carlwgeorge/ripgrep/repo/epel-7/carlwgeorge-ripgrep-epel-7.repo
 
+    # Bazel's repo
+    yum-config-manager --add-repo=ttps://copr.fedorainfracloud.org/coprs/vbatts/bazel/repo/epel-7/vbatts-bazel-epel-7.repo
+
+    # Make sure yum cache is still up to date after adding repos
+    #yum makecache -y
+
     # Install a whole bunch of stuff
-    yum install -y git dos2unix docker-ce docker-ce-cli zsh python36 \
-      python36-setuptools python-setuptools ruby ripgrep tree docker-compose \
-      kubectl
+    yum install -y git2u-all dos2unix docker-ce docker-ce-cli zsh python36u \
+      python36u-pip ruby ripgrep tree docker-compose kubectl bazel
+
+    # Make python3 and pip3 reference python3.6 and pip3.6
+    ln -s /usr/bin/python3.6 /usr/bin/python3
+    ln -s /usr/bin/pip3.6 /usr/bin/pip3
 
     # Standard compilers and junk
     yum groupinstall -y "Development Tools"
 
-    # Get pip2 and pip3
-    easy_install-3.6 pip
+    # Get pip2
     easy_install-2.7 pip
+
+    # add non-root user to docker group
+    sudo gpasswd -a vagrant docker
   SHELL
 
   #############################################################################
